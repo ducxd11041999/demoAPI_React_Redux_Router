@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 class ProductActionPage extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
   render(){
     return(
         <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -8,12 +13,10 @@ class ProductActionPage extends Component {
                    <label >Tên sản phẩm</label>
                    <input type="text" className="form-control" placeholder="Nhập tên sản phẩm" />
                 </div>
-               
               <div className="form-group">
                    <label >Giá</label>
                    <input type="text" className="form-control" placeholder="Nhập giá sản phẩm" />
                 </div>
-
                 <div className="form-group">
                    <label>Trạng thái</label>
                 </div>

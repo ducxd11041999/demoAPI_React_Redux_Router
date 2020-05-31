@@ -7,9 +7,7 @@ import {createStore} from 'redux';
 import appReducers from './reducers/index'
 import {Provider} from 'react-redux'
 
-const store = createStore(
-	appReducers,
-
+const store = createStore( appReducers,
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	);
 
