@@ -15,15 +15,15 @@ const routes = [
 {
 	path : '/product-add',
 	exact : false,
-	main : () =>{
-		return <ProductActionPage />
+	main : ({history}) =>{
+		return <ProductActionPage  history = {history}/>
 	}
 },
 {
 	path : '/product-edit/:id',
 	exact : false,
-	main : ({match}) =>{
-		return <ProductActionPage match={match}/>
+	main : ({match, history}) =>{
+		return <ProductActionPage match={match} history = {history}/>
 	}
 },
 {

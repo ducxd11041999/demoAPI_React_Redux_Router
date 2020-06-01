@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, Link, useRouteMatch} from 'react-router-dom'
+import {Link, useRouteMatch} from 'react-router-dom'
 
 const menus = [
 {
@@ -31,7 +31,7 @@ class Menu extends Component {
     return( 
         <div className="navbar navbar-default" >
           <div className="container-fluid">
-            <a className="navbar-brand">HOME</a>
+            <a href="/" className="navbar-brand">HOME</a>
             <ul className="nav navbar-nav">
                 {this.showMenu(menus)}
             </ul>
