@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import callApi from './../../utils/API_Caller.js'
 import {Link} from 'react-router-dom'
+import {actAddProductRequest, actGetProductRequest, actUpdateProductRequest} from './../../actions/index'
+import {connect} from 'react-redux'
 class ProductActionPage extends Component {
   constructor(props) {
     super(props);
@@ -16,16 +18,21 @@ class ProductActionPage extends Component {
     var {match} = this.props;
     if(match){
       var id = match.params.id;
-      callApi(`products/${id}`, 'GET', null).then(res =>{
-          var data = res.data
-          this.setState({
-              id : data.id,
-              txtName : data.name,
-              txtPrice: data.price,
-              cbStatus: data.status
-          })
-      })
+      this.props.onEditProduct(id)
     }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps)
+  {
+      var {product} = nextProps;
+      console.log(nextProps)
+      if(nextProps && nextProps.product){
+        this.setState({
+          id: product.id,
+          txtName:product.name,
+          txtPrice: product.price,
+          cbStatus: product.status
+        })
+      }
   }
   onChange = (e) =>{
       var target = e.target;
@@ -39,22 +46,18 @@ class ProductActionPage extends Component {
       e.preventDefault();
       var{id, txtName, txtPrice, cbStatus} = this.state;
       var {history} = this.props;
-      if(id){
-          callApi(`products/${id}`, 'PUT', {
-                name: txtName,
-                price: txtPrice,
-                status : cbStatus
-          }).then(res =>{
-            history.goBack();
-          })
-      }else{
-      callApi('products', 'POST', {
+      var product = {
+          id: id,
           name: txtName,
           price: txtPrice,
           status : cbStatus
-      }).then(res =>{
-            history.goBack();
-      })
+        }
+      if(id){
+          this.props.onUpdateProduct(product)
+          history.goBack();
+      }else{
+        this.props.onAddProduct(product)
+        history.goBack();
     }
   }
   render(){
@@ -102,4 +105,22 @@ class ProductActionPage extends Component {
       )
   }
 }
-export default ProductActionPage;
+const mapDispatchToProps = (dispatch, props) =>{
+  return ({
+    onAddProduct: (product) =>{
+      dispatch(actAddProductRequest(product))
+    },
+    onEditProduct: (id) =>{
+      dispatch(actGetProductRequest(id))
+    },
+    onUpdateProduct: (product) =>{
+      dispatch(actUpdateProductRequest(product))
+    }
+  })
+}
+const mapStateToProps =(state)=>{
+  return{
+    product: state.itemEdit
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductActionPage);
