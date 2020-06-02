@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import callApi from './../../utils/API_Caller.js'
 import {Link} from 'react-router-dom'
 import {actAddProductRequest, actGetProductRequest, actUpdateProductRequest} from './../../actions/index'
 import {connect} from 'react-redux'
